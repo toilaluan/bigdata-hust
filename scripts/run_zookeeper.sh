@@ -1,0 +1,1 @@
+~/kafka_2.13-3.6.0//bin/zookeeper-server-start.sh ~/kafka_2.13-3.6.0/config/zookeeper.properties

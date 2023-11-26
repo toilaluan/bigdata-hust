@@ -16,8 +16,10 @@ class RealEstateScraper:
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
         }
         self.cookies = {"session_cookie": RealEstateScraper.SESSION_COOKIE}
+
     def main_page_links(self, i):
         return f"https://hanoirealestate.com.vn/vi/cho-thue-can-ho/next-page-{i}.html"
+
     def get_full_url(self, path):
         return f"{RealEstateScraper.BASE_URL}{path}"
 
@@ -84,7 +86,9 @@ def main():
     total_data = []
     for main_page_url in tqdm(page_links):
         property_links = scraper.get_property_links(main_page_url)
-        properties_data = [scraper.extract_property_data(link) for link in property_links]
+        properties_data = [
+            scraper.extract_property_data(link) for link in property_links
+        ]
         total_data.extend(properties_data)
 
     with open("estate_data.json", "w", encoding="utf-8") as f:

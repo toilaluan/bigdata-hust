@@ -1,5 +1,6 @@
 from kafka import KafkaProducer
 import json
+import time
 
 with open("crawl_data/estate_data.json", "r", encoding="utf-8") as f:
     data_list = json.load(f)
@@ -11,11 +12,12 @@ producer = KafkaProducer(
 )
 
 # Kafka topic name
-topic_name = "your_topic"
+topic_name = "estate"
 
 # Send each dictionary as a separate message
-for item in data_list:
-    producer.send(topic_name, item)
-    producer.flush()
-
-print("Messages sent to Kafka")
+while True:
+    for item in data_list:
+        producer.send(topic_name, item)
+        producer.flush()
+        time.sleep(5)
+        print("Sent an item.")

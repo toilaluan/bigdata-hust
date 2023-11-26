@@ -1,0 +1,1 @@
+~/kafka_2.13-3.6.0/bin/kafka-topics.sh --create --topic estate --bootstrap-server localhost:9092

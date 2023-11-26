@@ -1,0 +1,1 @@
+curl https://github.com/weaviate/spark-connector/releases/download/v1.3.0/spark-connector-assembly-1.3.0.jar --output jars/spark-connector-assembly-1.3.0.jar
