@@ -1,7 +1,6 @@
----
-version: '3.4'
 services:
   weaviate-node-1:
+    init: true
     command:
     - --host
     - 0.0.0.0
@@ -9,24 +8,27 @@ services:
     - '8080'
     - --scheme
     - http
-    image: semitechnologies/weaviate:1.22.5
+    image: semitechnologies/weaviate:1.23.0
     ports:
     - 8080:8080
-    volumes:
-    - ./weaviate-data-node-1:/var/lib/weaviate
+    - 6060:6060
+    - 50051:50051
     restart: on-failure:0
+    volumes:
+      - ./data-node-1:/var/lib/weaviate
     environment:
-      ENABLE_MODULES: multi2vec-clip
-      DEFAULT_VECTORIZER_MODULE: multi2vec-clip
-      CLIP_INFERENCE_API: http://multi2vec-clip:8080
+      LOG_LEVEL: 'debug'
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      ENABLE_MODULES: 'text2vec-openai,text2vec-cohere,text2vec-huggingface'
+      DEFAULT_VECTORIZER_MODULE: 'none'
       CLUSTER_HOSTNAME: 'node1'
       CLUSTER_GOSSIP_BIND_PORT: '7100'
       CLUSTER_DATA_BIND_PORT: '7101'
 
   weaviate-node-2:
+    init: true
     command:
     - --host
     - 0.0.0.0
@@ -34,25 +36,28 @@ services:
     - '8080'
     - --scheme
     - http
-    image: semitechnologies/weaviate:1.22.5
+    image: semitechnologies/weaviate:1.23.0
     ports:
     - 8081:8080
-    volumes:
-    - ./weaviate-data-node-2:/var/lib/weaviate
+    - 6061:6060
+    - 50052:50051
     restart: on-failure:0
+    volumes:
+      - ./data-node-2:/var/lib/weaviate
     environment:
-      ENABLE_MODULES: multi2vec-clip
-      DEFAULT_VECTORIZER_MODULE: multi2vec-clip
-      CLIP_INFERENCE_API: http://multi2vec-clip:8080
+      LOG_LEVEL: 'debug'
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      ENABLE_MODULES: 'text2vec-openai,text2vec-cohere,text2vec-huggingface'
+      DEFAULT_VECTORIZER_MODULE: 'none'
       CLUSTER_HOSTNAME: 'node2'
       CLUSTER_GOSSIP_BIND_PORT: '7102'
       CLUSTER_DATA_BIND_PORT: '7103'
       CLUSTER_JOIN: 'weaviate-node-1:7100'
-    
+
   weaviate-node-3:
+    init: true
     command:
     - --host
     - 0.0.0.0
@@ -60,29 +65,22 @@ services:
     - '8080'
     - --scheme
     - http
-    image: semitechnologies/weaviate:1.22.5
+    image: semitechnologies/weaviate:1.23.0
     ports:
     - 8082:8080
-    volumes:
-    - ./weaviate-data-node-3:/var/lib/weaviate
+    - 6062:6060
+    - 50053:50051
     restart: on-failure:0
+    volumes:
+      - ./data-node-3:/var/lib/weaviate
     environment:
-      ENABLE_MODULES: multi2vec-clip
-      DEFAULT_VECTORIZER_MODULE: multi2vec-clip
-      CLIP_INFERENCE_API: http://multi2vec-clip:8080
+      LOG_LEVEL: 'debug'
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      ENABLE_MODULES: 'text2vec-openai,text2vec-cohere,text2vec-huggingface'
+      DEFAULT_VECTORIZER_MODULE: 'none'
       CLUSTER_HOSTNAME: 'node3'
       CLUSTER_GOSSIP_BIND_PORT: '7104'
       CLUSTER_DATA_BIND_PORT: '7105'
       CLUSTER_JOIN: 'weaviate-node-1:7100'
-
-  multi2vec-clip:
-    image: semitechnologies/multi2vec-clip:sentence-transformers-clip-ViT-B-32-multilingual-v1
-    environment:
-      ENABLE_CUDA: 0 # set to 1 to enable
-  
-volumes:
-  weaviate_data:
-...
