@@ -1,2 +1,5 @@
 *.pyc
 *.png
+minio/data*
+weaviate_estate/weaviate-data-node*
+tmp
