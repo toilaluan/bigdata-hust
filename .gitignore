@@ -1,3 +1,6 @@
+!assets/*
+!assets/demo-1.png
+!assets/demo-2.png
 *.pyc
 *.png
 minio/data*
