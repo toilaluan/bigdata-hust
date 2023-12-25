@@ -3,6 +3,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 import json
+import numpy as np
 import base64
 from PIL import Image
 import io
@@ -44,14 +45,26 @@ def load_and_convert_image(url):
         return None
 
 
+
 def load_image(image_url):
-    response = requests.get(image_url)
-    img = Image.open(BytesIO(response.content))
-    return img
+    try:
+        response = requests.get(image_url)
+        img = Image.open(BytesIO(response.content))
+        return img
+    except Exception as e:
+        print(f"Error downloading image: {e}")
+        return None
 
 
 def image_to_base64(image):
     buffered = BytesIO()
+    if isinstance(image, np.ndarray):
+        image = Image.fromarray(image)
     image.save(buffered, format="JPEG")
     img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
     return img_str
+
+def base64_to_image(img_str):
+    img_data = base64.b64decode(img_str)
+    img = Image.open(io.BytesIO(img_data))
+    return img
