@@ -12,12 +12,12 @@ producer = KafkaProducer(
 )
 
 # Kafka topic name
-topic_name = "estate"
+topic_name = "real-estate"
 
 # Send each dictionary as a separate message
 while True:
     for item in data_list:
         producer.send(topic_name, item)
         producer.flush()
-        time.sleep(5)
+        time.sleep(2)
         print("Sent an item.")
