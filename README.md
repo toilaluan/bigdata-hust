@@ -2,4 +2,5 @@
 
 ## Overview
 
-![bigdata drawio](https://github.com/toilaluan/bigdata-hust/assets/92072154/9e550cbc-cc46-4ac6-b0d3-7dccb2266ac9)
+
+![bigdata drawio (1)](https://github.com/toilaluan/bigdata-hust/assets/92072154/3a39c1d0-21a5-467e-9959-4611b7c99165)
